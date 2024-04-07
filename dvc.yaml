@@ -1,0 +1,33 @@
+stages:
+  download:
+    cmd: python3 download.py
+    deps:
+    - download.py
+    params:
+    - downloads.n_locs
+    - downloads.year
+    outs:
+    - files/
+  prepare:
+    cmd: python3 prepare.py
+    deps:
+    - files/
+    - prepare.py
+    outs:
+    - outputs/prepared
+  process:
+    cmd: python3 prepare.py
+    deps:
+    - files/
+    - outputs/prepared
+    - process.py
+    outs:
+    - outputs/processed
+  evaluate:
+    cmd: python3 evaluate.py
+    deps:
+    - evaluate.py
+    - outputs/prepared
+    - outputs/processed
+    outs:
+    - outputs/r2score.txt
